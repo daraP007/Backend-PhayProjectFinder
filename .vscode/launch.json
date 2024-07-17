@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PhayStudyBackendApplication<phayStudyBackend>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "devDara.phayStudyBackend.PhayStudyBackendApplication",
+            "projectName": "phayStudyBackend",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
