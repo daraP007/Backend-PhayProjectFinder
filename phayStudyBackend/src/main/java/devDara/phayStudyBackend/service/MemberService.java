@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import devDara.phayStudyBackend.dao.UserDao;
-import devDara.phayStudyBackend.model.Users;
+import devDara.phayStudyBackend.model.Member;
+import devDara.phayStudyBackend.repository.MemberDao;
 
 @Service
-public class UserService {
+public class MemberService {
     @Autowired
-    UserDao userDao;
+    MemberDao memberDao;
 
-    public ResponseEntity<List<Users>> getAllUsers() {
+    public ResponseEntity<List<Member>> getAllUsers() {
         try {
-            return new ResponseEntity<>(userDao.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(memberDao.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,19 +28,19 @@ public class UserService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<List<Users>> getUserByFirstName(String firstName) {
+    public ResponseEntity<List<Member>> getUserByFirstName(String firstName) {
         try {
-            return new ResponseEntity<>(userDao.findByFirstName(firstName), HttpStatus.OK);
+            return new ResponseEntity<>(memberDao.findByFirstName(firstName), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(userDao.findByFirstName(firstName), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(memberDao.findByFirstName(firstName), HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<String> addUser(Users user) {
+    public ResponseEntity<String> addUser(Member user) {
         try {
-            user.setRole("user");
-            userDao.save(user);
+            //user.setRole(Role.USER);
+            memberDao.save(user);
             return new ResponseEntity<>("success", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,9 +48,9 @@ public class UserService {
         return new ResponseEntity<>("unsucessful", HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<String> deleteUser(Users user) {
+    public ResponseEntity<String> deleteUser(Member user) {
         try {
-            userDao.delete(user);
+            memberDao.delete(user);
             return new ResponseEntity<>("success", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,14 +58,14 @@ public class UserService {
         return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
     }
 
-    public void updateUser(Users user) {
-        userDao.save(user);
+    public void updateUser(Member user) {
+        memberDao.save(user);
     }
 
-    public ResponseEntity<Users> getLoginInfo(String email, String password) {
-        Users found = new Users();
+    public ResponseEntity<Member> getLoginInfo(String email, String password) {
+        Member found = new Member();
         try {
-            found = userDao.findByEmail(email);
+            found = memberDao.findByEmail(email);
 
             if (found.getPassword().toLowerCase() == password.toLowerCase()) {
                 return new ResponseEntity<>(found, HttpStatus.OK);

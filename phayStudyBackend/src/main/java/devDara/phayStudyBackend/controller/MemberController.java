@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import devDara.phayStudyBackend.model.Users;
-import devDara.phayStudyBackend.service.UserService;
+import devDara.phayStudyBackend.model.Member;
+import devDara.phayStudyBackend.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,28 +28,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("member")
 @CrossOrigin("http://localhost:5174")
-public class UserController {
+public class MemberController {
 
     @Autowired
-    UserService userService;
+    MemberService memeberService;
 
-    @GetMapping("allUsers")
-    public ResponseEntity<List<Users>> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("allMember")
+    public ResponseEntity<List<Member>> getAllUsers() {
+        return memeberService.getAllUsers();
     }
 
     @GetMapping("firstName/{firstName}")
-    public ResponseEntity<List<Users>> getUserByFirstName(@PathVariable String firstName) {
-        return userService.getUserByFirstName(firstName);
+    public ResponseEntity<List<Member>> getUserByFirstName(@PathVariable String firstName) {
+        return memeberService.getUserByFirstName(firstName);
     }
 
     @GetMapping("retrieve")
-    public ResponseEntity<Users> login(HttpServletRequest request) {
+    public ResponseEntity<Member> login(HttpServletRequest request) {
         String email = "";
         String password = "";
         try {
@@ -61,31 +60,31 @@ public class UserController {
             email = json.get("email").asText();
             password = json.get("password").asText();
 
-            return userService.getLoginInfo(email, password);
+            return memeberService.getLoginInfo(email, password);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return userService.getLoginInfo(email, password);
+        return memeberService.getLoginInfo(email, password);
     }
 
     @PostMapping("signup")
-    public ResponseEntity<String> addUser(@RequestBody Users user) {
+    public ResponseEntity<String> addUser(@RequestBody Member user) {
         System.out.println(user);
-        ResponseEntity<String> status = userService.addUser(user);
+        ResponseEntity<String> status = memeberService.addUser(user);
         return status;
     }
 
     @DeleteMapping("delete")
-    public ResponseEntity<String> deleteUser(@RequestBody Users user) {
-        ResponseEntity<String> status = userService.deleteUser(user);
+    public ResponseEntity<String> deleteUser(@RequestBody Member user) {
+        ResponseEntity<String> status = memeberService.deleteUser(user);
         return status;
     }
 
     @PutMapping("update")
-    public String updateUserFirstName(@RequestBody Users user) {
-        userService.updateUser(user);
+    public String updateUserFirstName(@RequestBody Member user) {
+        memeberService.updateUser(user);
 
         return user.getFirstName();
     }
