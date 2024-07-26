@@ -8,7 +8,6 @@ import devDara.phayStudyBackend.model.AuthenticationResponse;
 import devDara.phayStudyBackend.model.RegisterRequest;
 import devDara.phayStudyBackend.service.AuthenticationService;
 
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +25,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest entity) {
-        return ResponseEntity.ok(authenticationService.authenticate(entity));
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request){
+        
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
     
     

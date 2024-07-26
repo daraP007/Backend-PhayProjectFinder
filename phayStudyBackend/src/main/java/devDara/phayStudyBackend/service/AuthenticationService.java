@@ -1,8 +1,7 @@
 package devDara.phayStudyBackend.service;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +37,16 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'authenticate'");
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+
+        var member = memberDao.findByEmail(request.getEmail()).orElseThrow();
+
+        var jwtToken = jwtService.generateToken(member);
+
+        // return the object with the token
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
 }

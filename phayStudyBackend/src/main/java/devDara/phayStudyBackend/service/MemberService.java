@@ -2,11 +2,10 @@ package devDara.phayStudyBackend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -65,9 +64,9 @@ public class MemberService {
     public ResponseEntity<Member> getLoginInfo(String email, String password) {
         Member found = new Member();
         try {
-            found = memberDao.findByEmail(email);
+            found = memberDao.findByPassword(password);
 
-            if (found.getPassword().toLowerCase() == password.toLowerCase()) {
+            if (found.getEmail().toLowerCase() == email.toLowerCase()) {
                 return new ResponseEntity<>(found, HttpStatus.OK);
             }
         } catch (Exception e) {
