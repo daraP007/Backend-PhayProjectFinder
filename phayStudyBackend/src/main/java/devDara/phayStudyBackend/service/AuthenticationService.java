@@ -1,5 +1,6 @@
 package devDara.phayStudyBackend.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +16,13 @@ import devDara.phayStudyBackend.repository.MemberDao;
 
 @Service
 public class AuthenticationService {
-
+    @Autowired
     private MemberDao memberDao;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private JwtService jwtService;
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -30,6 +34,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
+
         memberDao.save(member);
         var jwtToken = jwtService.generateToken(member);
 
