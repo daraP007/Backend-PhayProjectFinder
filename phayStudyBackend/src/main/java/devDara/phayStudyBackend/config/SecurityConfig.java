@@ -34,7 +34,8 @@ public class SecurityConfig {
         request
                 .csrf(csrf -> csrf.disable()) // CSRF configuration
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("api/auth**").permitAll() // The connection must have this string to pass through security
+                        .requestMatchers("api/auth/register").permitAll()
+                        .requestMatchers("api/auth/authenticate").permitAll()  // The connection must have this string to pass through security
                         .requestMatchers("member/allMember").permitAll()
                         .anyRequest()
                         .authenticated())

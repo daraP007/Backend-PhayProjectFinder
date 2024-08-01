@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping("member")
+@RequestMapping("/api/member")
 @CrossOrigin("http://localhost:5174")
 public class MemberController {
 

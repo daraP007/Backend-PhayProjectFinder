@@ -10,12 +10,14 @@ import devDara.phayStudyBackend.service.AuthenticationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
 @RequestMapping("api/auth")
+@CrossOrigin("http://localhost:5174")
 public class AuthenticationController {
 
     @Autowired
@@ -28,6 +30,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request){
+        System.out.println(request.getEmail());
         
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
