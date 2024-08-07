@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import devDara.phayStudyBackend.model.AuthenticationRequest;
 import devDara.phayStudyBackend.model.Member;
 import devDara.phayStudyBackend.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,58 +34,44 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class MemberController {
 
     @Autowired
-    MemberService memeberService;
+    MemberService memberService;
 
     @GetMapping("allMember")
     public ResponseEntity<List<Member>> getAllUsers() {
-        return memeberService.getAllUsers();
+        return memberService.getAllUsers();
     }
 
     @GetMapping("firstName/{firstName}")
     public ResponseEntity<List<Member>> getUserByFirstName(@PathVariable String firstName) {
-        return memeberService.getUserByFirstName(firstName);
+        return memberService.getUserByFirstName(firstName);
     }
 
-    @GetMapping("retrieve")
-    public ResponseEntity<Member> login(HttpServletRequest request) {
-        String email = "";
-        String password = "";
-        try {
-            String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+   @PostMapping("/password/change")
+   public ResponseEntity<String> changePassword(@RequestBody Member request){
 
-            ObjectMapper mapper = new JsonMapper();
-            JsonNode json = mapper.readTree(body);
-
-            email = json.get("email").asText();
-            password = json.get("password").asText();
-
-            return memeberService.getLoginInfo(email, password);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return memeberService.getLoginInfo(email, password);
-    }
+    ResponseEntity<String> status = memberService.getUserByUsername(request);
+    return status;
+   }
 
     @PostMapping("signup")
     public ResponseEntity<String> addUser(@RequestBody Member user) {
         System.out.println(user);
-        ResponseEntity<String> status = memeberService.addUser(user);
+        ResponseEntity<String> status = memberService.addUser(user);
         return status;
     }
 
     @DeleteMapping("delete")
     public ResponseEntity<String> deleteUser(@RequestBody Member user) {
-        ResponseEntity<String> status = memeberService.deleteUser(user);
+        ResponseEntity<String> status = memberService.deleteUser(user);
         return status;
     }
 
     @PutMapping("update")
     public String updateUserFirstName(@RequestBody Member user) {
-        memeberService.updateUser(user);
+        memberService.updateUser(user);
 
         return user.getFirstName();
     }
+
 
 }

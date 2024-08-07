@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+    @Autowired
     private final MemberDao memberDao;
 
     @Autowired
@@ -37,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("api/auth/register").permitAll()
                         .requestMatchers("api/auth/authenticate").permitAll()  // The connection must have this string to pass through security
                         .requestMatchers("member/allMember").permitAll()
+                        .requestMatchers("api/project**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
