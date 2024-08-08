@@ -49,11 +49,16 @@ public class AuthenticationService {
 
 
         var member = memberDao.findByEmail(request.getEmail()).orElseThrow();
+        System.out.println(member.getFirstName());
 
         var jwtToken = jwtService.generateToken(member);
         System.out.println("it a success!");
-        // return the object with the token
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    public void retrieveUser(AuthenticationRequest request) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'retrieveUser'");
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import devDara.phayStudyBackend.model.AuthenticationRequest;
 import devDara.phayStudyBackend.model.AuthenticationResponse;
+import devDara.phayStudyBackend.model.Member;
 import devDara.phayStudyBackend.model.RegisterRequest;
 import devDara.phayStudyBackend.service.AuthenticationService;
 
@@ -33,6 +34,12 @@ public class AuthenticationController {
         System.out.println(request.getEmail());
         
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Member>login(@RequestBody AuthenticationRequest request){
+        authenticationService.retrieveUser(request);
+        return null;
     }
     
     
