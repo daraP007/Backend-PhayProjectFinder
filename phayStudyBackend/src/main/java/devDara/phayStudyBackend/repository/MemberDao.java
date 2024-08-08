@@ -11,9 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface MemberDao extends JpaRepository<Member, Integer> {
-
-    
     List<Member> findByFirstName(String firstName);
     Optional<Member> findByEmail(String email);
     Member findByPassword(String password);
+    Member findByUsername(String userName);
 }

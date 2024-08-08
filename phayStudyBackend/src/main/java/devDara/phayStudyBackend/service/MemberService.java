@@ -2,6 +2,8 @@ package devDara.phayStudyBackend.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import devDara.phayStudyBackend.model.Member;
+import devDara.phayStudyBackend.model.Role;
 import devDara.phayStudyBackend.repository.MemberDao;
 
 @Service
@@ -38,7 +41,7 @@ public class MemberService {
 
     public ResponseEntity<String> addUser(Member user) {
         try {
-            //user.setRole(Role.USER);
+            user.setRole(Role.USER);
             memberDao.save(user);
             return new ResponseEntity<>("success", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -61,19 +64,20 @@ public class MemberService {
         memberDao.save(user);
     }
 
-    public ResponseEntity<Member> getLoginInfo(String email, String password) {
-        Member found = new Member();
-        try {
-            found = memberDao.findByPassword(password);
+    public ResponseEntity<String> getUserByUsername(Member request) {
 
-            if (found.getEmail().toLowerCase() == email.toLowerCase()) {
-                return new ResponseEntity<>(found, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+         try{
+            Member member = memberDao.findByUsername(request.getUsername());
+            member.setPassword(request.getPassword());
+            memberDao.save(member);
+            return new ResponseEntity("successful", HttpStatus.OK);
+         }catch(Exception e){
+            e.getStackTrace();
+         }
+         return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
+         
     }
+
+   
 
 }
