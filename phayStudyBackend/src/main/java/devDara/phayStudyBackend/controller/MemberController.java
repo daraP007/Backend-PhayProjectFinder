@@ -2,20 +2,14 @@ package devDara.phayStudyBackend.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import devDara.phayStudyBackend.model.AuthenticationRequest;
 import devDara.phayStudyBackend.model.Member;
+import devDara.phayStudyBackend.model.Role;
 import devDara.phayStudyBackend.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,28 +24,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/member")
-@CrossOrigin("http://localhost:5174")
+@CrossOrigin("http://localhost:5173")
 public class MemberController {
 
     @Autowired
     MemberService memberService;
 
-    @GetMapping("allMember")
+    @GetMapping("/allMember")
     public ResponseEntity<List<Member>> getAllUsers() {
         return memberService.getAllUsers();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Member> getUser(@RequestBody AuthenticationRequest user) {
+        return memberService.getUser(user.getEmail(), user.getPassword());
     }
 
     @GetMapping("firstName/{firstName}")
     public ResponseEntity<List<Member>> getUserByFirstName(@PathVariable String firstName) {
         return memberService.getUserByFirstName(firstName);
     }
-
-   @PostMapping("/password/change")
-   public ResponseEntity<String> changePassword(@RequestBody Member request){
-
-    ResponseEntity<String> status = memberService.getUserByUsername(request);
-    return status;
-   }
 
     @PostMapping("signup")
     public ResponseEntity<String> addUser(@RequestBody Member user) {
@@ -73,5 +65,10 @@ public class MemberController {
         return user.getFirstName();
     }
 
+    @PutMapping("/role/admin")
+    public Role updateUsertoAdmin(@RequestBody Member user) {
+        memberService.updateUserToAdmin(user);
+        return user.getRole();
+    }
 
 }

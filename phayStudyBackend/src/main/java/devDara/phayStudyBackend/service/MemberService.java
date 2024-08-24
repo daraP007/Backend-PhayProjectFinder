@@ -2,7 +2,6 @@ package devDara.phayStudyBackend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,20 +63,25 @@ public class MemberService {
         memberDao.save(user);
     }
 
-    public ResponseEntity<String> getUserByUsername(Member request) {
+    public ResponseEntity<Member> getUser(String email, String password) {
+        Member current = new Member();
+        try {
+            current = memberDao.findByPassword(password);
 
-         try{
-            Member member = memberDao.findByUsername(request.getUsername());
-            member.setPassword(request.getPassword());
-            memberDao.save(member);
-            return new ResponseEntity("successful", HttpStatus.OK);
-         }catch(Exception e){
-            e.getStackTrace();
-         }
-         return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
-         
+            if (current.getEmail().equalsIgnoreCase(email)) {
+                return new ResponseEntity<>(current, HttpStatus.OK);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(current, HttpStatus.BAD_REQUEST);
     }
 
-   
+    public void updateUserToAdmin(Member user) {
+        user.setRole(Role.ADMIN);
+        memberDao.save(user);
+    }
 
 }
