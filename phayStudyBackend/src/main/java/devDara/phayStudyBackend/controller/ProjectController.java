@@ -15,6 +15,7 @@ import devDara.phayStudyBackend.service.ProjectService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -35,8 +36,14 @@ public class ProjectController {
         return status;
     }
 
+    @GetMapping("/{projectId}")
+    public ResponseEntity<Project> getProject(@PathVariable int projectId){
+        System.out.println("IDDDDDD IS -> " + projectId);
+        return projectService.getProject(projectId);
+    }
+
     @GetMapping("/allProject")
-    public  ResponseEntity<List<Project>> getAllProject() {
+    public ResponseEntity<List<Project>> getAllProject() {
         return projectService.getAllProject();
     }
     
@@ -51,5 +58,9 @@ public class ProjectController {
         ResponseEntity<String> status =  projectService.modifyProject(request);
         return status;
     }
+
+
+
+
 
 }

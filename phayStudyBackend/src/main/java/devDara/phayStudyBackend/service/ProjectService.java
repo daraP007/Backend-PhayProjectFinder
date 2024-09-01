@@ -28,7 +28,7 @@ public class ProjectService {
         return new ResponseEntity<>("project save unsuccessful", HttpStatus.BAD_REQUEST);
         
     }
-
+    
     public ResponseEntity<List<Project>> getAllProject() {
         try{
             
@@ -61,6 +61,17 @@ public class ProjectService {
         }
         return new ResponseEntity<>("Modify was unsuccesful", HttpStatus.BAD_REQUEST);
 
+    }
+
+    public ResponseEntity<Project> getProject(int projectId) {
+        try{
+            Project current = projectDao.findByProjectId(projectId);
+            return new ResponseEntity<>(current, HttpStatus.OK);
+
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+        return new ResponseEntity<>(new Project(), HttpStatus.BAD_REQUEST);
     }
 
     
