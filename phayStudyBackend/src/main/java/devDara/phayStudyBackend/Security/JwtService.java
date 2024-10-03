@@ -42,7 +42,7 @@
 
 //         return Jwts.builder()
 //         .setClaims(extractClaims)
-//         .setSubject(userDetails.getUsername()) //grabs the deatils
+//         .setSubject(userDetails.getUsername()) //grabs the details
 //         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) //set how long the key last before expired
 //         .signWith(getSigningKey(), SignatureAlgorithm.HS256) // uses the JWT algorithm with the our secret key
 //         .compact(); //compacts the detail into the string

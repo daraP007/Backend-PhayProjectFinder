@@ -35,12 +35,12 @@ public class ReplyController {
 
 
     @PostMapping("/addReply")
-    public ResponseEntity<String> addReply (@RequestBody String entity) {
+    public ResponseEntity<String> addReply (@RequestBody Reply entity) {
         return replyService.addReply(entity);
     }
 
     @DeleteMapping("/deleteReply")
-    public ResponseEntity<String> deleteReply (@RequestBody String entity) {
+    public ResponseEntity<String> deleteReply (@RequestBody Reply entity) {
         return replyService.deleteReply(entity);
     }
 

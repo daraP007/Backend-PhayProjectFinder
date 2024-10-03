@@ -26,13 +26,24 @@ public class ReplyService {
 
     }
 
-    public ResponseEntity<String> addReply(String entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addReply'");
+    public ResponseEntity<String> addReply(Reply entity) {
+        try{
+            replyDao.save(entity);
+            return new ResponseEntity<>("reply was saved!", HttpStatus.OK);
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+        return new ResponseEntity<>("reply was saved unsuccessful", HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<String> deleteReply(String entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteReply'");
+    public ResponseEntity<String> deleteReply(Reply entity) {
+        try{
+            replyDao.delete(entity);
+            return new ResponseEntity<>("reply was deleted!", HttpStatus.OK);
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+        return new ResponseEntity<>("reply was deleted unsuccessful", HttpStatus.BAD_REQUEST);
     }
+
 }

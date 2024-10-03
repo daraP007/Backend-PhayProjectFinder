@@ -24,4 +24,5 @@ public class Comment {
     private String comment;
     private String author;
     private int memberId;
+    private int projectId;
 }

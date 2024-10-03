@@ -58,6 +58,16 @@ public class CommentService {
         }
         return new ResponseEntity<>("Error update unsuccefully", HttpStatus.BAD_REQUEST);
      }
+
+    public ResponseEntity<List<Comment>> getAllCommentsByProjectId(int projectId) {
+        try{
+            return new ResponseEntity<>(commentDao.findAllByProjectId(projectId), HttpStatus.OK);
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList(), HttpStatus.BAD_REQUEST);
+    }
+
     }
 
     

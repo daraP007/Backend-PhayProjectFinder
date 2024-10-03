@@ -34,6 +34,12 @@ public class CommentController {
         return commentService.getAllComment();
     }
 
+    @GetMapping("/allComment/{projectId}")
+    public ResponseEntity<List<Comment>> getAllCommentsByProjectId(@PathVariable int projectId) {
+        return commentService.getAllCommentsByProjectId(projectId);
+    }
+    
+
     @PostMapping("/addComment")
     public ResponseEntity<String> addComment(@RequestBody Comment comment) {
         ResponseEntity<String> status = commentService.addComment(comment);
