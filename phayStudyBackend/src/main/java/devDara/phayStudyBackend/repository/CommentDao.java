@@ -7,8 +7,6 @@ import devDara.phayStudyBackend.model.Comment;
 
 @Repository
 public interface CommentDao extends JpaRepository<Comment,Integer> {
-
     Comment findById(int id);
-
     
 } 
